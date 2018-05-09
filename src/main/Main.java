@@ -1,8 +1,12 @@
 package main;
 
+import com.mysql.cj.xdevapi.SqlDataResult;
+
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Main {
 
@@ -14,19 +18,25 @@ public class Main {
 			System.out.println(e);
 			return;
 		}
+		String s;
 		BufferedReader br = new BufferedReader(fr);
 		StringBuffer sb = new StringBuffer();
-		sb.append(br.lines());
 		try {
+			while ((s = br.readLine()) != null) {
+				if (s.isEmpty()) continue;
+				sb.append(s);
+//				PreparedStatement preparedStatement = connection.prepareStatement(s);
+//				System.out.println(s + " -> " + preparedStatement.executeBatch());
+			}
+			System.out.println(sb);
+			PreparedStatement preparedStatement = connection.prepareStatement(sb.toString());
+			System.out.println(preparedStatement.executeBatch());
 			br.close();
-		} catch (IOException e) {
+		} catch (IOException | SQLException e) {
 			System.out.println(e);
 			return;
 		}
-		String code = "";
-		for (System.out.println(code)) {
-		}
-		PreparedStatement preparedStatement = connection.createStatement(sb);
+		System.out.println("Dump successful");
 	}
 
 	public static void main(String[] args) {
